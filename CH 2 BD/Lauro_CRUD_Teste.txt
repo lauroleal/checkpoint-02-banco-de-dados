@@ -1,0 +1,71 @@
+   -- ###
+-- 1 ###### CREATE ######
+   -- ###
+
+CREATE TABLE tabela_registro (
+id_bebe INT NOT NULL,
+id_mae INT NOT NULL,
+id_medico INT NOT NULL,
+id_hospital INT NOT NULL,
+CONSTRAINT FKAUX_bebe FOREIGN KEY (id_bebe) REFERENCES tabela_bebe (id_bebe),
+CONSTRAINT FKAUX_Mae_consulta FOREIGN KEY (id_mae) REFERENCES tabela_mae (id_mae),
+CONSTRAINT FKAUX_medico_consulta FOREIGN KEY (id_medico) REFERENCES tabela_medico (id_medico),
+CONSTRAINT FKAUX_hospital FOREIGN KEY (id_hospital) REFERENCES tabela_hospital (id_hospital));
+
+   -- ###
+-- 2 ###### INSERT ######
+   -- ###
+
+
+INSERT INTO  tabela_registro ( id_bebe, id_mae,id_medico,id_hospital)
+VALUES (1,1,3,1), (2,2,2,2), (3,3,2,4), (2,4,1,3);
+
+
+
+    -- ###
+-- 3 ###### SELECT ######
+   -- ###
+
+
+SELECT tabela_mae.nome AS 'Nome da Mãe', 
+       tabela_bebe.nome AS 'Nome Recem nascido', 
+CASE 
+   WHEN tabela_bebe.peso  > 1.6 THEN 'Peso normal' 
+   WHEN tabela_bebe.peso  > 1.9 THEN 'Peso medio' 
+   ELSE 'Prematuro' 
+END AS 'Caract. peso bebe',
+tabela_medico.nome AS 'Medico resp. Parto',
+tabela_hospital.nome_hospital AS 'Nome Hospital'
+FROM tabela_registro
+INNER JOIN tabela_bebe ON tabela_registro.id_bebe = tabela_bebe.id_bebe
+INNER JOIN tabela_mae ON tabela_registro.id_mae = tabela_mae.id_mae
+INNER JOIN tabela_medico ON tabela_registro.id_medico = tabela_medico.id_medico
+INNER JOIN tabela_hospital ON tabela_registro.id_hospital = tabela_hospital.id_hospital;
+
+
+    -- ###
+-- 4 ###### UPDATE ######
+   -- ###
+
+
+UPDATE tabela_mae
+SET nome = 'Angela A. Baffa', endereco_mae = 'Rua alguma coisa 12'
+WHERE nome LIKE '%Angela Baffa%';
+
+
+    -- ###
+-- 5 ###### DELETE ######
+   -- ###
+
+
+DELETE FROM tabela_mae
+   WHERE id_mae = 6;
+
+
+
+
+
+
+
+
+
